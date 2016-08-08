@@ -14,8 +14,8 @@ function getMessage(a, b) {
     return 'Переданное SVG-изображение содержит ' + a + ' объектов ' + 'и ' + (b * 4) + ' атрибутов';
   }
 
-  if (a) {
-    if (b) {
+  if (Array.isArray(a)) {
+    if (Array.isArray(b)) {
       var artifactsSquare = 0;
       var minLength = Math.min(a.length, b.length);
 
