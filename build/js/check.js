@@ -1,30 +1,37 @@
 function getMessage(a, b) {
-  if (a == true) {
-    return 'Переданное GIF-изображение анимировано и содержит ' + b + ' кадров';
+  var i;
+
+  if (typeof(a) === 'boolean') {
+    if (a) {
+      return 'Переданное GIF-изображение анимировано и содержит ' + b + ' кадров';
+    }
+    else {
+      return 'Переданное GIF-изображение не анимировано';
+    }
   }
 
-  else if (a == false) {
-    return 'Переданное GIF-изображение не анимировано';
-  }
-
-  else if (+a) {
+  if (typeof(a) === 'number') {
     return 'Переданное SVG-изображение содержит ' + a + ' объектов ' + 'и ' + (b * 4) + ' атрибутов';
   }
 
-  else if ([], b == undefined) {
+  if (a) {
+    if (b) {
+      var artifactsSquare = 0;
+      var minLength = Math.min(a.length, b.length);
+
+      for (i = 0; i < minLength; i++) {
+        artifactsSquare += a[i] * b[i];
+      }
+      return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
+    }
+
     var amountOfRedPoints = 0;
-    for (var i = 0; i < a.length; i++) {
+    var arrayLength = a.length;
+
+    for (i = 0; i < arrayLength; i++) {
       amountOfRedPoints += a[i];
     }
     return 'Количество красных точек во всех строчках изображения: ' + amountOfRedPoints;
-  }
-
-  else if ([],[]) {
-    var artifactsSquare = 0;
-    for (var i = 0; i < b.length; i++) {
-      artifactsSquare += a[i] * b[i];
-    }
-    return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
   }
 
 }
