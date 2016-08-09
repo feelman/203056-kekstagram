@@ -119,6 +119,25 @@
           this._resizeConstraint.side - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2);
 
+      var ctx = this._ctx;
+      var width = this._container.width;
+      var height = this._container.height;
+      var resizerSide = this._resizeConstraint.side;
+      var lineWidth = this._ctx.lineWidth;
+      ctx.font = '14px Tahoma';
+      ctx.fillStyle = 'rgb(255, 255, 255)';
+      ctx.fillText(this._image.naturalWidth + ' x ' + this._image.naturalHeight, -40, -130);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+
+      ctx.beginPath();
+      ctx.rect(-width / 2, -height / 2, width, height);
+      ctx.moveTo( (-resizerSide / 2) - lineWidth, (-resizerSide / 2) - lineWidth);
+      ctx.lineTo( (-resizerSide / 2) - lineWidth, resizerSide / 2);
+      ctx.lineTo( resizerSide / 2, resizerSide / 2);
+      ctx.lineTo( resizerSide / 2, (-resizerSide / 2) - lineWidth);
+      ctx.closePath();
+
+      ctx.fill('evenodd');
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
       // следующий кадр рисовался с привычной системой координат, где точка
