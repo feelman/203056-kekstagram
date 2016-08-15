@@ -190,7 +190,7 @@
   }
 
   var checkFormInputs = function(sizeLeft, sizeTop, sizeSide, buttonForward) {
-    if (parseInt(sizeLeft.value, 10) + parseInt(sizeSide.value, 10) > currentResizer._image.naturalWidth || parseInt(sizeTop.value, 10) + parseInt(sizeSide.value, 10) > currentResizer._image.naturalHeight || parseInt(sizeLeft.value, 10) < 0 || parseInt(sizeTop.value, 10) < 0) {
+    if (parseInt(sizeLeft.value, 10) + parseInt(sizeSide.value, 10) > currentResizer._image.naturalWidth || parseInt(sizeTop.value, 10) + parseInt(sizeSide.value, 10) > currentResizer._image.naturalHeight || parseInt(sizeLeft.value, 10) < 0 || parseInt(sizeTop.value, 10) < 0 || parseInt(sizeLeft.value, 10) > currentResizer._image.naturalWidth || parseInt(sizeTop.value, 10) > currentResizer._image.naturalHeight) {
       buttonForward.disabled = true;
     } else {
       buttonForward.disabled = false;
