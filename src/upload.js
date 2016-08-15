@@ -160,6 +160,8 @@
           resizeForm.classList.remove('invisible');
 
           hideMessage();
+
+          formChecker();
         };
 
         fileReader.readAsDataURL(element.files[0]);
@@ -167,6 +169,31 @@
         // Показ сообщения об ошибке, если формат загружаемого файла не поддерживается
         showMessage(Action.ERROR);
       }
+    }
+  };
+
+  function formChecker() {
+    var sizeLeft = document.querySelector('#resize-x');
+    var sizeTop = document.querySelector('#resize-y');
+    var sizeSide = document.querySelector('#resize-size');
+    var buttonForward = document.querySelector('#resize-fwd');
+
+    sizeLeft.oninput = function() {
+      checkFormInputs(sizeLeft, sizeTop, sizeSide, buttonForward);
+    };
+    sizeTop.oninput = function() {
+      checkFormInputs(sizeLeft, sizeTop, sizeSide, buttonForward);
+    };
+    sizeSide.oninput = function() {
+      checkFormInputs(sizeLeft, sizeTop, sizeSide, buttonForward);
+    };
+  }
+
+  var checkFormInputs = function(sizeLeft, sizeTop, sizeSide, buttonForward) {
+    if (parseInt(sizeLeft.value, 10) + parseInt(sizeSide.value, 10) > currentResizer._image.naturalWidth || parseInt(sizeTop.value, 10) + parseInt(sizeSide.value, 10) > currentResizer._image.naturalHeight || parseInt(sizeLeft.value, 10) < 0 || parseInt(sizeTop.value, 10) < 0 || parseInt(sizeLeft.value, 10) > currentResizer._image.naturalWidth || parseInt(sizeTop.value, 10) > currentResizer._image.naturalHeight) {
+      buttonForward.disabled = true;
+    } else {
+      buttonForward.disabled = false;
     }
   };
 
