@@ -197,6 +197,36 @@
     }
   };
 
+  // Сохраняем в cookies последний выбранный фильтр
+  var browserCookies = require('browser-cookies');
+  var submitButton = document.querySelector('#filter-fwd');
+  var elems = filterForm['upload-filter'];
+  var defaultFilter = elems[0].value;
+  elems.value = browserCookies.get('upload-filter') || defaultFilter;
+  submitButton.onclick = function() {
+    browserCookies.set('upload-filter', elems.value, {expires: days});
+  };
+
+  // Считаем дату рождения Грейс, в зависимости от текущей даты
+  var now = new Date();
+  var yearNow = now.getFullYear();
+  var yearLast = yearNow - 1;
+  var birthdayGrace = new Date(yearNow, 11, 9);
+
+  if (now >= birthdayGrace) {
+    birthdayGrace = new Date(yearNow, 11, 9);
+  } else {
+    birthdayGrace = new Date(yearLast, 11, 9);
+  }
+
+  // Считаем количество дней жизни cookie
+  var diff = now - birthdayGrace;
+  var milliseconds = diff;
+  var seconds = milliseconds / 1000;
+  var minutes = seconds / 60;
+  var hours = minutes / 60;
+  var days = hours / 24;
+
   /**
    * Обработка сброса формы кадрирования. Возвращает в начальное состояние
    * и обновляет фон.
