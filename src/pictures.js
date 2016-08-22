@@ -1,9 +1,7 @@
 'use strict';
 
-var pictures = [];
 window.jsonpCallback = function(data) {
-  pictures = data;
-  console.info(pictures);
+  window.pictures = data;
 };
 
 var createCallback = function(url, callbackFunction) {
