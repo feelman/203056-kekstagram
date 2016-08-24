@@ -29,9 +29,31 @@ if ('content' in templateElement) {
   elementToClone = templateElement.querySelector('.picture');
 }
 
+var IMAGE_LOAD_TIMEOUT = 10000;
+
 var getPictureElement = function(data, container) {
   var element = elementToClone.cloneNode(true);
   container.appendChild(element);
-  var backgroundImage = new Image();
+
+  var backgroundImage = new Image(182, 182);
+  var backgroundLoadTimeout;
+
+  backgroundImage.onload = function() {
+    clearTimeout(backgroundLoadTimeout);
+    element.replaceChild(backgroundImage, element.querySelector('img'));
+    filters.classList.remove('hidden');
+  };
+
+  backgroundImage.onerror = function() {
+    element.classList.add('picture-load-failure');
+  };
+
+  backgroundImage.src = data.url;
+
+  backgroundLoadTimeout = setTimeout(function() {
+    backgroundImage.src = '';
+    element.classList.add('picture-load-failure');
+  }, IMAGE_LOAD_TIMEOUT);
+
   return element;
 };
