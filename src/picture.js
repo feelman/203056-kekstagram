@@ -1,8 +1,6 @@
 'use strict';
 
 module.exports = (function() {
-  var filters = document.querySelector('.filters');
-  filters.classList.add('hidden');
   var templateElement = document.querySelector('#picture-template');
   var elementToClone;
 
@@ -25,7 +23,8 @@ module.exports = (function() {
     newImage.onload = function(evt) {
       clearTimeout(newImageLoadTimeout);
       image.src = evt.target.src;
-      filters.classList.remove('hidden');
+      var filtersHideOff = require('./pictures');
+      filtersHideOff();
     };
 
     newImage.onerror = function() {
