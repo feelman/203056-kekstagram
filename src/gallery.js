@@ -1,5 +1,6 @@
 'use strict';
 
+var pictureElements;
 var Gallery = function() {
   this.pictures = [];
   this.activePicture = 0;
@@ -11,6 +12,7 @@ var Gallery = function() {
 };
 
 Gallery.prototype.setPictures = function(pictures) {
+  pictureElements = document.querySelectorAll('.picture');
   this.pictures = pictures;
 };
 
@@ -28,6 +30,12 @@ Gallery.prototype.hide = function() {
 };
 
 Gallery.prototype.setActivePicture = function(number) {
+  while(pictureElements[number].classList.contains('picture-load-failure')) {
+    number++;
+    if(number === this.pictures.length) {
+      number = 0;
+    }
+  }
   this.activePicture = number;
   this.galleryOverlayImage.src = this.pictures[number].url;
   this.likesCount.textContent = this.pictures[number].likes;
