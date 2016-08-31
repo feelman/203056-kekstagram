@@ -1,5 +1,6 @@
 'use strict';
 
+var Gallery = require('./gallery');
 var load = require('./load');
 var getPictureElement = require('./picture');
 
@@ -15,9 +16,10 @@ module.exports = function filtersHideOff() {
 
 window.jsonpCallback = function(data) {
   pictures = data;
-  pictures.forEach(function(picture) {
-    getPictureElement(picture, picturesContainer);
+  pictures.forEach(function(picture, number) {
+    getPictureElement(picture, picturesContainer, number);
   });
+  Gallery.setPictures(pictures);
 };
 
 load(PICTURES_LOAD_URL, 'jsonpCallback');

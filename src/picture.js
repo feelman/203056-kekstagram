@@ -1,5 +1,6 @@
 'use strict';
 
+var Gallery = require('./gallery');
 module.exports = (function() {
   var templateElement = document.querySelector('#picture-template');
   var elementToClone;
@@ -12,7 +13,7 @@ module.exports = (function() {
 
   var IMAGE_LOAD_TIMEOUT = 10000;
 
-  return function(data, container) {
+  return function(data, container, number) {
     var element = elementToClone.cloneNode(true);
     container.appendChild(element);
 
@@ -37,6 +38,11 @@ module.exports = (function() {
       image.src = '';
       element.classList.add('picture-load-failure');
     }, IMAGE_LOAD_TIMEOUT);
+
+    element.onclick = function(evt) {
+      evt.preventDefault();
+      Gallery.show(number);
+    };
 
     return element;
   };
