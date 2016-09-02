@@ -2,7 +2,7 @@
 
 var Gallery = require('./gallery');
 var load = require('./load');
-var getPictureElement = require('./picture');
+var Picture = require('./picture');
 
 var picturesContainer = document.querySelector('.pictures');
 var pictures = [];
@@ -17,7 +17,8 @@ module.exports = function filtersHideOff() {
 window.jsonpCallback = function(data) {
   pictures = data;
   pictures.forEach(function(picture, number) {
-    getPictureElement(picture, picturesContainer, number);
+    picture = new Picture(picture, number);
+    picturesContainer.appendChild(picture.element);
   });
   Gallery.setPictures(pictures);
 };
