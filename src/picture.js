@@ -1,49 +1,59 @@
 'use strict';
 
 var Gallery = require('./gallery');
-module.exports = (function() {
-  var templateElement = document.querySelector('#picture-template');
-  var elementToClone;
 
-  if ('content' in templateElement) {
-    elementToClone = templateElement.content.querySelector('.picture');
-  } else {
-    elementToClone = templateElement.querySelector('.picture');
-  }
+var templateElement = document.querySelector('#picture-template');
+var elementToClone;
 
-  var IMAGE_LOAD_TIMEOUT = 10000;
+if ('content' in templateElement) {
+  elementToClone = templateElement.content.querySelector('.picture');
+} else {
+  elementToClone = templateElement.querySelector('.picture');
+}
 
-  return function(data, container, number) {
-    var element = elementToClone.cloneNode(true);
-    container.appendChild(element);
+var IMAGE_LOAD_TIMEOUT = 10000;
 
-    var newImage = new Image(182, 182);
-    var newImageLoadTimeout;
-    var image = element.querySelector('img');
+var Picture = function(data, number) {
+  this.data = data;
+  this.number = number;
+  this.element = elementToClone.cloneNode(true);
+  this.image = this.setImage();
+  this.showGallery = this.showGallery.bind(this);
+  this.element.addEventListener('click', this.showGallery);
+};
 
-    newImage.onload = function(evt) {
-      clearTimeout(newImageLoadTimeout);
-      image.src = evt.target.src;
-      var filtersHideOff = require('./pictures');
-      filtersHideOff();
-    };
+Picture.prototype.showGallery = function(evt) {
+  evt.preventDefault();
+  Gallery.show(this.number);
+};
 
-    newImage.onerror = function() {
-      element.classList.add('picture-load-failure');
-    };
+Picture.prototype.setImage = function() {
+  var self = this;
+  var newImage = new Image(182, 182);
+  var newImageLoadTimeout;
+  var image = this.element.querySelector('img');
 
-    newImage.src = data.url;
-
-    newImageLoadTimeout = setTimeout(function() {
-      image.src = '';
-      element.classList.add('picture-load-failure');
-    }, IMAGE_LOAD_TIMEOUT);
-
-    element.onclick = function(evt) {
-      evt.preventDefault();
-      Gallery.show(number);
-    };
-
-    return element;
+  newImage.onload = function(evt) {
+    clearTimeout(newImageLoadTimeout);
+    image.src = evt.target.src;
+    var filtersHideOff = require('./pictures');
+    filtersHideOff();
   };
-})();
+
+  newImage.onerror = function() {
+    self.element.classList.add('picture-load-failure');
+  };
+
+  newImage.src = self.data.url;
+
+  newImageLoadTimeout = setTimeout(function() {
+    self.image.src = '';
+    self.element.classList.add('picture-load-failure');
+  }, IMAGE_LOAD_TIMEOUT);
+};
+
+Picture.prototype.remove = function() {
+  this.element.removeEventListener('click', this.shownGallery);
+};
+
+module.exports = Picture;
