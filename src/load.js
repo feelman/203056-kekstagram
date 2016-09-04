@@ -1,7 +1,13 @@
 'use strict';
 
 module.exports = function(url, callbackFunction) {
-  var scriptEl = document.createElement('script');
-  scriptEl.src = url + '?callback=' + callbackFunction;
-  document.body.appendChild(scriptEl);
+  var xhr = new XMLHttpRequest();
+
+  xhr.onload = function(evt) {
+    var loadedData = JSON.parse(evt.target.response);
+    callbackFunction(loadedData);
+  };
+
+  xhr.open('GET', url);
+  xhr.send();
 };

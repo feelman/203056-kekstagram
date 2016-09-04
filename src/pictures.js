@@ -14,7 +14,7 @@ module.exports = function filtersHideOff() {
   filters.classList.remove('hidden');
 };
 
-window.jsonpCallback = function(data) {
+var renderPictures = function(data) {
   pictures = data;
   pictures.forEach(function(picture, number) {
     picture = new Picture(picture, number);
@@ -23,4 +23,4 @@ window.jsonpCallback = function(data) {
   Gallery.setPictures(pictures);
 };
 
-load(PICTURES_LOAD_URL, 'jsonpCallback');
+load(PICTURES_LOAD_URL, renderPictures);
