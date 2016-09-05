@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(url, callbackFunction) {
+module.exports = function(url, params, callbackFunction) {
   var xhr = new XMLHttpRequest();
 
   xhr.onload = function(evt) {
@@ -8,6 +8,6 @@ module.exports = function(url, callbackFunction) {
     callbackFunction(loadedData);
   };
 
-  xhr.open('GET', url);
+  xhr.open('GET', url + '?from=' + (params.from || 0) + '&to=' + (params.to || Infinity) + '&filter=' + (params.filter || 'default'));
   xhr.send();
 };
