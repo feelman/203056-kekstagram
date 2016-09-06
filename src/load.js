@@ -8,6 +8,6 @@ module.exports = function(url, params, callbackFunction) {
     callbackFunction(loadedData);
   };
 
-  xhr.open('GET', url + '?from=' + (params.from || 0) + '&to=' + (params.to || Infinity) + '&filter=' + (params.filter || 'default'));
+  xhr.open('GET', url + '?from=' + (params.from || 0) + '&to=' + (params.to || Infinity) + '&filter=' + (params.filter || 'filter-popular'));
   xhr.send();
 };

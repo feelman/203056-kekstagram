@@ -3,13 +3,21 @@
 module.exports = function(list, filterID) {
   switch (filterID) {
     case 'filter-popular':
-      return list;
+      list.sort(function(a, b) {
+        return b.likes - a.likes;
+      });
+      break;
 
     case 'filter-new':
-      var newList = list.filter(function(item) {
-        return item.created < 3;
+      var currentDate = Date.now();
+      var threeDaysInMilliseconds = 3 * 24 * 60 * 60 * 1000;
+
+      list = list.filter(function(item) {
+        var diff = currentDate - item.created;
+        return diff <= threeDaysInMilliseconds;
       });
-      newList.sort(function(a, b) {
+
+      list = list.sort(function(a, b) {
         return b.created - a.created;
       });
       break;
@@ -20,4 +28,5 @@ module.exports = function(list, filterID) {
       });
       break;
   }
+  return list;
 };
