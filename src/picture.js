@@ -41,13 +41,13 @@ Picture.prototype.setImage = function() {
   };
 
   newImage.onerror = function() {
-    self.element.classList.add('picture-load-failure');
-  };
+    this.element.classList.add('picture-load-failure');
+  }.bind(this);
 
   newImage.src = self.data.url;
 
   newImageLoadTimeout = setTimeout(function() {
-    self.image.src = '';
+    image.src = '';
     self.element.classList.add('picture-load-failure');
   }, IMAGE_LOAD_TIMEOUT);
 };
