@@ -51,12 +51,19 @@
     getEndPage();
   };
 
+  var isBottomReached = function() {
+    var footerPosition = footer.getBoundingClientRect();
+    return footerPosition.top - window.innerHeight - 100 <= GAP;
+  };
+
   var loadPictures = function(filter, currentPageNumber) {
-    load(PICTURES_LOAD_URL, {
-      from: currentPageNumber * pageSize,
-      to: currentPageNumber * pageSize + pageSize,
-      filter: filter
-    }, renderPictures);
+    do {
+      load(PICTURES_LOAD_URL, {
+        from: currentPageNumber * pageSize,
+        to: currentPageNumber * pageSize + pageSize,
+        filter: filter
+      }, renderPictures);
+    } while (!isBottomReached);
   };
 
   window.addEventListener('scroll', getEndPage);
