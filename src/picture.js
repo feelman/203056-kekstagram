@@ -47,7 +47,7 @@ Picture.prototype.setImage = function() {
   newImage.src = self.data.url;
 
   newImageLoadTimeout = setTimeout(function() {
-    self.image.src = '';
+    image.src = '';
     self.element.classList.add('picture-load-failure');
   }, IMAGE_LOAD_TIMEOUT);
 };
