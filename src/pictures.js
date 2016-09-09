@@ -38,6 +38,7 @@
       pageNumber = 0;
       activeFilter = evt.target.id;
       loadPictures(evt.target.id, pageNumber);
+      localStorage.setItem('defaultFilterStorage', activeFilter);
     }
   };
 
