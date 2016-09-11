@@ -3,9 +3,8 @@
 module.exports = function(url, params, callbackFunction) {
   var xhr = new XMLHttpRequest();
 
-  var defaultFilterStorage = localStorage.getItem('defaultFilterStorage');
-  var defaultFilterElement = document.getElementById(defaultFilterStorage);
-  defaultFilterElement.checked = true;
+  var defaultFilterStorage = localStorage.getItem('defaultFilterStorage') || 'filter-popular';
+  document.querySelector('#' + defaultFilterStorage).checked = true;
 
   xhr.onload = function(evt) {
     var loadedData = JSON.parse(evt.target.response);
