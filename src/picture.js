@@ -28,7 +28,6 @@ Picture.prototype.showGallery = function(evt) {
 };
 
 Picture.prototype.setImage = function() {
-  var self = this;
   var newImage = new Image(182, 182);
   var newImageLoadTimeout;
   var image = this.element.querySelector('img');
@@ -44,12 +43,12 @@ Picture.prototype.setImage = function() {
     this.element.classList.add('picture-load-failure');
   }.bind(this);
 
-  newImage.src = self.data.url;
+  newImage.src = this.data.url;
 
   newImageLoadTimeout = setTimeout(function() {
     image.src = '';
-    self.element.classList.add('picture-load-failure');
-  }, IMAGE_LOAD_TIMEOUT);
+    this.element.classList.add('picture-load-failure');
+  }.bind(this), IMAGE_LOAD_TIMEOUT);
 };
 
 Picture.prototype.remove = function() {

@@ -17,16 +17,14 @@ Gallery.prototype.setPictures = function(pictures) {
 };
 
 Gallery.prototype.show = function(number) {
-  this.onCloseClick();
-  this.onPictureClick();
+  this.addEvent();
   this.galleryOverlay.classList.remove('invisible');
   this.setActivePicture(number);
 };
 
 Gallery.prototype.hide = function() {
   this.galleryOverlay.classList.add('invisible');
-  this.galleryOverlayClose.onlick = null;
-  this.galleryOverlayImage.onlick = null;
+  this.removeEvent();
 };
 
 Gallery.prototype.setActivePicture = function(number) {
@@ -42,26 +40,33 @@ Gallery.prototype.setActivePicture = function(number) {
   this.commentsCount.textContent = this.pictures[number].comments;
 };
 
-Gallery.prototype.onCloseClick = function() {
-  var self = this;
-
-  this.galleryOverlayClose.onclick = function() {
-    self.hide();
-  };
+Gallery.prototype.addEvent = function() {
+  this.onCloseClick = this.onCloseClick.bind(this);
+  this.onPictureClick = this.onPictureClick.bind(this);
+  this.galleryOverlayClose.addEventListener('click', this.onCloseClick);
+  this.galleryOverlayImage.addEventListener('click', this.onPictureClick);
 };
 
-Gallery.prototype.onPictureClick = function() {
-  var self = this;
-  var nextNumber;
+Gallery.prototype.removeEvent = function() {
+  this.galleryOverlayClose.removeEventListener('click', this.onCloseClick);
+  this.galleryOverlayImage.removeEventListener('click', this.onPictureClick);
+};
 
-  this.galleryOverlayImage.onclick = function() {
-    if (self.activePicture >= self.activePicture.length - 1) {
-      nextNumber = 0;
-    } else {
-      nextNumber = self.activePicture + 1;
-    }
-    self.setActivePicture(nextNumber);
-  };
+Gallery.prototype.onCloseClick = function(evt) {
+  evt.preventDefault();
+  this.hide();
+};
+
+Gallery.prototype.onPictureClick = function(evt) {
+  evt.preventDefault();
+  var nextNumber = this.activePicture;
+
+  if (this.activePicture >= this.activePicture.length - 1) {
+    nextNumber = 0;
+  } else {
+    nextNumber = this.activePicture + 1;
+  }
+  this.setActivePicture(nextNumber);
 };
 
 module.exports = new Gallery();
