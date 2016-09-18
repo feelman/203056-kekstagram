@@ -72,7 +72,7 @@
     pictures = data;
     pictures.forEach(function(picture, number) {
       picture = new Picture(picture, number);
-      picturesContainer.appendChild(picture.element);
+      picture.add(picturesContainer);
     });
     Gallery.setPictures(pictures);
     optimizedScroll();
